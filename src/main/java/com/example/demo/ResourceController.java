@@ -1,6 +1,11 @@
 package com.example.demo;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,14 +16,29 @@ import java.util.List;
 public class ResourceController {
 
     final ResourceRepository resourceRepository;
+    final FuncInterface funcInterface;
 
     @Autowired
-    public ResourceController(ResourceRepository resourceRepository) {
+    public ResourceController(ResourceRepository resourceRepository, FuncInterface funcInterface) {
         this.resourceRepository = resourceRepository;
+        this.funcInterface = funcInterface;
     }
-
+    @Operation(summary = "Get a resource by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the resource",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MyResource.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Resource not found",
+                    content = @Content) })
     @GetMapping("/resource")
     public List<MyResource> getResource() {
         return resourceRepository.findAll();
+    }
+
+    @GetMapping("/func")
+    public String getFunc() {
+        return funcInterface.getName();
     }
 }

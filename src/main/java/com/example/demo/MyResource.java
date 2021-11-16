@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "resource")
-
 public class MyResource {
     public MyResource() {
 
