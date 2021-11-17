@@ -23,7 +23,7 @@ public class ApplicationTests {
 
     @Test
     public void test() {
-        String myResource = this.webTestClient
+        String result = this.webTestClient
                 .get()
                 .uri("/func")
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +35,7 @@ public class ApplicationTests {
                 .expectBody(String.class)
                 .returnResult().getResponseBody();
 
-        System.out.println(myResource);
+        assert(result != null);
 
     }
 
