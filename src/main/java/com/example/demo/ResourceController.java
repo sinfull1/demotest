@@ -17,11 +17,14 @@ public class ResourceController {
 
     final ResourceRepository resourceRepository;
     final FuncInterface funcInterface;
+    final FuncInterface2 funcInterface2;
 
     @Autowired
-    public ResourceController(ResourceRepository resourceRepository, FuncInterface funcInterface) {
+    public ResourceController(ResourceRepository resourceRepository, FuncInterface funcInterface,
+                              FuncInterface2 funcInterface2) {
         this.resourceRepository = resourceRepository;
         this.funcInterface = funcInterface;
+        this.funcInterface2 = funcInterface2;
     }
     @Operation(summary = "Get a resource by its id")
     @ApiResponses(value = {
@@ -40,5 +43,10 @@ public class ResourceController {
     @GetMapping("/func")
     public String getFunc() {
         return funcInterface.getName();
+    }
+
+    @GetMapping("/func2")
+    public String getFunc2() {
+        return funcInterface2.getLocation();
     }
 }
